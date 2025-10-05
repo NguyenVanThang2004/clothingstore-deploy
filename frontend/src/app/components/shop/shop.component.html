@@ -1,0 +1,216 @@
+<!-- breadcrumb -->
+<div class="container">
+    <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+        <a href="index.html" class="stext-109 cl8 hov-cl1 trans-04">
+            Home
+            <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+        </a>
+
+        <span class="stext-109 cl4">
+            Shop
+        </span>
+    </div>
+</div>
+
+
+<!-- Product -->
+<div class="bg0 m-t-23 p-b-140">
+    <div class="container">
+        <div class="flex-w flex-sb-m p-b-52">
+            <div class="flex-w flex-l-m filter-tope-group m-tb-10">
+                <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" [class.how-active1]="!selectedCategoryId"
+                    (click)="filterByCategory(null)">
+                    Tất cả sản phẩm
+                </button>
+
+                <!-- Loop categories -->
+                <button *ngFor="let c of categories" class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5"
+                    [class.how-active1]="selectedCategoryId === c.id" (click)="filterByCategory(c.id)">
+                    {{ c.name }}
+                </button>
+
+            </div>
+
+            <div class="flex-w flex-c-m m-tb-10">
+                <!-- Toggle Filter -->
+                <div class="flex-c-m stext-106 cl6 size-104 bor4 pointer hov-btn3 trans-04 m-r-8 m-tb-4"
+                    (click)="toggleFilter()">
+
+                    <!-- icon filter -->
+                    <i class="icon-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-filter-list" *ngIf="!showFilter"></i>
+
+                    <!-- icon close -->
+                    <i class="icon-close-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close" *ngIf="showFilter"></i>
+
+                    Filter
+                </div>
+
+                <!-- Toggle Search -->
+                <div class="flex-c-m stext-106 cl6 size-105 bor4 pointer hov-btn3 trans-04 m-tb-4"
+                    (click)="toggleSearch()">
+
+                    <!-- icon search -->
+                    <i class="icon-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-search" *ngIf="!showSearch"></i>
+
+                    <!-- icon close -->
+                    <i class="icon-close-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close" *ngIf="showSearch"></i>
+
+                    Search
+                </div>
+            </div>
+
+            <!-- Search panel -->
+            <div class="panel-search w-full p-t-10 p-b-15" *ngIf="showSearch">
+                <div class="bor8 dis-flex p-l-15">
+
+                    <!-- nút search -->
+                    <button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04" (click)="onSearch()">
+                        <i class="zmdi zmdi-search"></i>
+                    </button>
+
+                    <!-- ô nhập -->
+                    <input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" [(ngModel)]="keyword"
+                        placeholder="Nhập tên, mô tả, danh mục..." (keyup.enter)="onSearch()" />
+
+                    <!-- nút clear -->
+                    <button *ngIf="keyword" class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04"
+                        (click)="keyword=''; onSearch()">
+                        <i class="zmdi zmdi-close"></i>
+                    </button>
+                </div>
+            </div>
+
+
+            <!-- Filter panel -->
+            <div class="panel-filter w-full p-t-10" *ngIf="showFilter">
+                <div class="wrap-filter flex-w bg6 w-full p-lr-40 p-t-27 p-lr-15-sm">
+
+                    <!-- Sort -->
+                    <div class="filter-col1 p-r-15 p-b-27">
+                        <div class="mtext-102 cl2 p-b-15">Sắp xếp theo</div>
+                        <ul>
+                            <li class="p-b-6">
+                                <button (click)="applySort('')" [class.filter-link-active]="!selectedSort"
+                                    class="filter-link stext-106 trans-04 btn-reset">
+                                    Mặc định
+                                </button>
+                            </li>
+                            <li class="p-b-6">
+                                <button (click)="applySort('price,asc')"
+                                    [class.filter-link-active]="selectedSort==='price,asc'"
+                                    class="filter-link stext-106 trans-04 btn-reset">
+                                    Giá: thấp đến cao
+                                </button>
+                            </li>
+                            <li class="p-b-6">
+                                <button (click)="applySort('price,desc')"
+                                    [class.filter-link-active]="selectedSort==='price,desc'"
+                                    class="filter-link stext-106 trans-04 btn-reset">
+                                    Giá: cao đến thấp
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="mtext-102 cl2 p-b-15">Giá</div>
+                    <ul>
+                        <li class="p-b-6">
+                            <button (click)="applyPrice(null,null)"
+                                [class.filter-link-active]="!selectedPriceMin && !selectedPriceMax"
+                                class="filter-link stext-106 trans-04 btn-reset">
+                                Tất cả
+                            </button>
+                        </li>
+
+                        <li class="p-b-6">
+                            <button (click)="applyPrice(0,100000)"
+                                [class.filter-link-active]="selectedPriceMin===0 && selectedPriceMax===100000"
+                                class="filter-link stext-106 trans-04 btn-reset">
+                                Dưới 100.000₫
+                            </button>
+                        </li>
+
+                        <li class="p-b-6">
+                            <button (click)="applyPrice(100000,200000)"
+                                [class.filter-link-active]="selectedPriceMin===100000 && selectedPriceMax===200000"
+                                class="filter-link stext-106 trans-04 btn-reset">
+                                100.000₫ - 200.000₫
+                            </button>
+                        </li>
+
+                        <li class="p-b-6">
+                            <button (click)="applyPrice(200000,400000)"
+                                [class.filter-link-active]="selectedPriceMin===200000 && selectedPriceMax===400000"
+                                class="filter-link stext-106 trans-04 btn-reset">
+                                200.000₫ - 400.000₫
+                            </button>
+                        </li>
+
+                        <li class="p-b-6">
+                            <button (click)="applyPrice(400000,null)"
+                                [class.filter-link-active]="selectedPriceMin===400000 && !selectedPriceMax"
+                                class="filter-link stext-106 trans-04 btn-reset">
+                                Trên 400.000₫
+                            </button>
+                        </li>
+                    </ul>
+
+
+                </div>
+            </div>
+
+
+
+
+
+
+
+        </div>
+
+        <div class="row isotope-grid">
+            <div class="col-sm-6 col-md-4 col-lg-3 p-b-35" *ngFor="let p of products">
+                <div class="block2">
+                    <div class="block2-pic hov-img0">
+                        <img [src]="getThumbnail(p)" alt="IMG-PRODUCT">
+
+                        <a [routerLink]="['/product-detail', p.id]"
+                            class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04">
+                            Quick View
+                        </a>
+                    </div>
+
+                    <div class="block2-txt flex-w flex-t p-t-14">
+                        <div class="block2-txt-child1 flex-col-l ">
+                            <a [routerLink]="['/product-detail', p.id]"
+                                class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+                                {{ p.name }}
+                            </a>
+                            <span class="stext-105 cl3">
+                                {{ p.price | number:'1.0-0' }} đ
+                            </span>
+                        </div>
+
+                        <div class="block2-txt-child2 flex-r p-t-3">
+                            <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+                                <img class="icon-heart1 dis-block trans-04" src="/assets/images/icons/icon-heart-01.png"
+                                    alt="ICON" />
+                                <img class="icon-heart2 dis-block trans-04 ab-t-l"
+                                    src="/assets/images/icons/icon-heart-02.png" alt="ICON" />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Load more -->
+        <div class="text-center my-4" *ngIf="meta && currentPage < meta.pages">
+            <button (click)="loadMore()" class="btn btn-primary">
+                Load More
+            </button>
+        </div>
+
+
+    </div>
+</div>

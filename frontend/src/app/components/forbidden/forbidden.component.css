@@ -1,0 +1,88 @@
+/* Wrapper căn giữa nội dung theo chiều dọc & ngang */
+.page-wrap {
+    min-height: calc(100dvh - 80px);
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    background: #f5f7fb;
+}
+
+/* Thẻ card hiển thị nội dung chính */
+.card {
+    max-width: 640px;
+    width: 100%;
+    padding: 32px;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    text-align: center;
+}
+
+/* Tiêu đề số lỗi */
+h1 {
+    font-size: 72px;
+    line-height: 1;
+    margin: 0 0 8px;
+    color: #1f6feb;
+    letter-spacing: 1px;
+}
+
+/* Tiêu đề phụ */
+h2 {
+    margin: 0 0 8px;
+    font-weight: 600;
+    color: #0b141a;
+}
+
+/* Mô tả */
+p {
+    color: #667085;
+    margin: 0 0 20px;
+}
+
+/* Nhóm nút hành động */
+.actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 8px;
+}
+
+/* Nút cơ bản */
+.btn {
+    padding: 10px 16px;
+    border-radius: 10px;
+    border: 1px solid #d0d7de;
+    background: #f6f8fa;
+    color: #0b141a;
+    cursor: pointer;
+    transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+/* Nút chính */
+.btn.primary {
+    background: #1f6feb;
+    color: #fff;
+    border-color: #1f6feb;
+}
+
+.btn.primary:hover {
+    filter: brightness(1.05);
+}
+
+/* Responsive nhỏ gọn trên mobile */
+@media (max-width: 480px) {
+    .card {
+        padding: 24px;
+    }
+
+    h1 {
+        font-size: 56px;
+    }
+}

@@ -1,0 +1,173 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "frontend": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/frontend",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "polyfills": [
+              "zone.js"
+            ],
+            "tsConfig": "tsconfig.app.json",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "@angular/material/prebuilt-themes/indigo-pink.css",
+              "src/styles.css",
+              "src/assets/vendor/bootstrap/css/bootstrap.min.css",
+              "src/assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css",
+              "src/assets/fonts/iconic/css/material-design-iconic-font.min.css",
+              "src/assets/fonts/linearicons-v1.0.0/icon-font.min.css",
+              "src/assets/vendor/animate/animate.css",
+              "src/assets/vendor/css-hamburgers/hamburgers.min.css",
+              "src/assets/vendor/animsition/css/animsition.min.css",
+              "src/assets/vendor/select2/select2.min.css",
+              "src/assets/vendor/daterangepicker/daterangepicker.css",
+              "src/assets/vendor/slick/slick.css",
+              "src/assets/vendor/slick/slick-theme.css",
+              "src/assets/vendor/MagnificPopup/magnific-popup.css",
+              "src/assets/vendor/perfect-scrollbar/perfect-scrollbar.css",
+              "src/assets/css/util.css",
+              "src/assets/css/main.css",
+              "src/assets/css/admin-responsive.css",
+              "node_modules/slick-carousel/slick/slick.css",
+              "node_modules/slick-carousel/slick/slick-theme.css",
+              "node_modules/ngx-toastr/toastr.css"
+            ],
+            "scripts": [
+              "src/assets/vendor/jquery/jquery-3.2.1.min.js",
+              "src/assets/vendor/animsition/js/animsition.min.js",
+              "src/assets/vendor/bootstrap/js/popper.js",
+              "src/assets/vendor/bootstrap/js/bootstrap.min.js",
+              "src/assets/vendor/select2/select2.min.js",
+              "src/assets/vendor/daterangepicker/moment.min.js",
+              "src/assets/vendor/daterangepicker/daterangepicker.js",
+              "src/assets/vendor/slick/slick.min.js",
+              "src/assets/js/slick-custom.js",
+              "src/assets/vendor/parallax100/parallax100.js",
+              "src/assets/vendor/sweetalert/sweetalert.min.js",
+              "src/assets/vendor/MagnificPopup/jquery.magnific-popup.min.js",
+              "src/assets/vendor/isotope/isotope.pkgd.min.js",
+              "src/assets/vendor/perfect-scrollbar/perfect-scrollbar.min.js",
+              "src/assets/js/main.js",
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/slick-carousel/slick/slick.min.js"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "frontend:build:production"
+            },
+            "development": {
+              "browserTarget": "frontend:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "frontend:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
+            "tsConfig": "tsconfig.spec.json",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "@angular/material/prebuilt-themes/indigo-pink.css",
+              "src/styles.css",
+              "src/assets/vendor/bootstrap/css/bootstrap.min.css",
+              "src/assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css",
+              "src/assets/fonts/iconic/css/material-design-iconic-font.min.css",
+              "src/assets/fonts/linearicons-v1.0.0/icon-font.min.css",
+              "src/assets/vendor/animate/animate.css",
+              "src/assets/vendor/css-hamburgers/hamburgers.min.css",
+              "src/assets/vendor/animsition/css/animsition.min.css",
+              "src/assets/vendor/select2/select2.min.css",
+              "src/assets/vendor/daterangepicker/daterangepicker.css",
+              "src/assets/vendor/slick/slick.css",
+              "src/assets/vendor/slick/slick-theme.css",
+              "src/assets/vendor/MagnificPopup/magnific-popup.css",
+              "src/assets/vendor/perfect-scrollbar/perfect-scrollbar.css",
+              "src/assets/css/util.css",
+              "src/assets/css/main.css",
+              "node_modules/slick-carousel/slick/slick.css",
+              "node_modules/slick-carousel/slick/slick-theme.css"
+            ],
+            "scripts": [
+              "src/assets/vendor/jquery/jquery-3.2.1.min.js",
+              "src/assets/vendor/animsition/js/animsition.min.js",
+              "src/assets/vendor/bootstrap/js/popper.js",
+              "src/assets/vendor/bootstrap/js/bootstrap.min.js",
+              "src/assets/vendor/select2/select2.min.js",
+              "src/assets/vendor/daterangepicker/moment.min.js",
+              "src/assets/vendor/daterangepicker/daterangepicker.js",
+              "src/assets/vendor/slick/slick.min.js",
+              "src/assets/js/slick-custom.js",
+              "src/assets/vendor/parallax100/parallax100.js",
+              "src/assets/vendor/sweetalert/sweetalert.min.js",
+              "src/assets/vendor/MagnificPopup/jquery.magnific-popup.min.js",
+              "src/assets/vendor/isotope/isotope.pkgd.min.js",
+              "src/assets/vendor/perfect-scrollbar/perfect-scrollbar.min.js",
+              "src/assets/js/main.js"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "analytics": false
+  }
+}

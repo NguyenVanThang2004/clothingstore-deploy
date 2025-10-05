@@ -1,0 +1,25 @@
+<div class="pr-wrap">
+    <div class="pr-card">
+        <div class="pr-icon" [class.ok]="status === 'SUCCESS'" [class.fail]="status === 'FAILED'">
+            <span *ngIf="status==='SUCCESS'">✓</span>
+            <span *ngIf="status==='FAILED'">✕</span>
+        </div>
+
+
+        <h2 class="pr-title" *ngIf="status==='SUCCESS'">Thanh toán thành công 🎉</h2>
+        <h2 class="pr-title" *ngIf="status==='FAILED'">Thanh toán thất bại ❌</h2>
+
+        <p class="pr-sub" *ngIf="status==='SUCCESS'">
+            Cảm ơn bạn! Hệ thống sẽ đưa bạn tới trang đơn hàng trong <b>{{redirectIn}}</b>s.
+        </p>
+        <p class="pr-sub" *ngIf="status==='FAILED'">
+            Đã có lỗi trong quá trình thanh toán. Sẽ quay lại giỏ hàng sau <b>{{redirectIn}}</b>s.
+        </p>
+
+        <div class="pr-actions">
+            <button class="btn btn-primary" *ngIf="status==='SUCCESS'" (click)="goNow()">Xem đơn hàng</button>
+            <button class="btn btn-outline-secondary" *ngIf="status==='FAILED'" (click)="goNow()">Quay lại giỏ
+                hàng</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,291 @@
+/* Admin Responsive Styles */
+
+/* General responsive improvements */
+@media (max-width: 575.98px) {
+    /* Extra small devices */
+    .container {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+    
+    .card {
+        margin-left: -0.75rem;
+        margin-right: -0.75rem;
+        border-radius: 0;
+    }
+    
+    .card-body {
+        padding: 1rem 0.75rem;
+    }
+    
+    /* Button adjustments */
+    .btn {
+        font-size: 0.875rem;
+        padding: 0.375rem 0.75rem;
+    }
+    
+    .btn-sm {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.5rem;
+    }
+    
+    /* Form controls */
+    .form-control, .form-select {
+        font-size: 0.875rem;
+    }
+    
+    /* Table adjustments */
+    .table-responsive {
+        font-size: 0.875rem;
+    }
+    
+    /* Modal adjustments */
+    .modal-dialog {
+        margin: 0.5rem;
+    }
+    
+    .modal-content {
+        border-radius: 0.375rem;
+    }
+    
+    /* Badge adjustments */
+    .badge {
+        font-size: 0.75rem;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+    /* Small devices */
+    .btn-group-vertical {
+        display: inline-flex !important;
+        flex-direction: row;
+    }
+    
+    .btn-group-vertical .btn {
+        margin-bottom: 0 !important;
+        margin-right: 0.25rem;
+    }
+}
+
+/* Medium devices and up - ensure proper table display */
+@media (min-width: 768px) {
+    .table-responsive {
+        overflow-x: visible;
+    }
+}
+
+/* Large devices - optimize spacing */
+@media (min-width: 992px) {
+    .container {
+        max-width: 1200px;
+    }
+}
+
+/* Extra large devices */
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1400px;
+    }
+}
+
+/* Admin specific responsive utilities */
+.admin-mobile-hidden {
+    display: none !important;
+}
+
+@media (min-width: 768px) {
+    .admin-mobile-hidden {
+        display: table-cell !important;
+    }
+}
+
+.admin-mobile-stack {
+    display: flex;
+    flex-direction: column;
+}
+
+@media (min-width: 576px) {
+    .admin-mobile-stack {
+        flex-direction: row;
+    }
+}
+
+/* Chart responsive */
+.chart-container {
+    position: relative;
+    width: 100%;
+    height: 300px;
+}
+
+@media (max-width: 768px) {
+    .chart-container {
+        height: 250px;
+    }
+}
+
+/* Modal responsive improvements */
+@media (max-width: 991.98px) {
+    .modal-dialog {
+        margin: 1rem;
+    }
+    
+    .modal-dialog.modal-xl {
+        max-width: calc(100% - 2rem);
+    }
+    
+    .modal-dialog.modal-lg {
+        max-width: calc(100% - 2rem);
+    }
+}
+
+/* Form responsive */
+@media (max-width: 575.98px) {
+    .row.g-3 > [class*="col-"] {
+        margin-bottom: 1rem;
+    }
+    
+    .form-label {
+        font-size: 0.875rem;
+        margin-bottom: 0.25rem;
+    }
+}
+
+/* Table responsive improvements */
+.table-responsive {
+    border-radius: 0.375rem;
+    border: 1px solid #dee2e6;
+}
+
+@media (max-width: 767.98px) {
+    .table th, .table td {
+        padding: 0.5rem 0.25rem;
+        vertical-align: middle;
+    }
+    
+    .table th {
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+    
+    .table td {
+        font-size: 0.875rem;
+    }
+}
+
+/* Navigation improvements */
+.nav-pills .nav-link {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+}
+
+@media (max-width: 575.98px) {
+    .nav-pills .nav-link {
+        padding: 0.375rem 0.5rem;
+        font-size: 0.75rem;
+    }
+}
+
+/* Card improvements */
+.card {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    border: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+@media (max-width: 575.98px) {
+    .card {
+        box-shadow: none;
+        border-left: none;
+        border-right: none;
+    }
+}
+
+/* Pagination improvements */
+.pagination {
+    justify-content: center;
+}
+
+@media (min-width: 576px) {
+    .pagination {
+        justify-content: flex-end;
+    }
+}
+
+/* Status badges responsive */
+.badge {
+    white-space: nowrap;
+}
+
+@media (max-width: 575.98px) {
+    .badge {
+        font-size: 0.65rem;
+        padding: 0.25rem 0.375rem;
+    }
+}
+
+/* Action buttons responsive */
+.btn-group-vertical {
+    min-width: 2.5rem;
+}
+
+@media (max-width: 767.98px) {
+    .btn-group-vertical .btn {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.75rem;
+    }
+}
+
+/* Text responsive */
+@media (max-width: 575.98px) {
+    h1, .h1 { font-size: 1.75rem; }
+    h2, .h2 { font-size: 1.5rem; }
+    h3, .h3 { font-size: 1.25rem; }
+    h4, .h4 { font-size: 1.125rem; }
+    h5, .h5 { font-size: 1rem; }
+    h6, .h6 { font-size: 0.875rem; }
+}
+
+/* Loading states */
+.loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+/* Animation improvements */
+@media (prefers-reduced-motion: reduce) {
+    .sidebar-overlay,
+    #sidebar,
+    .btn,
+    .modal,
+    .card {
+        transition: none !important;
+    }
+}
+
+/* Print styles */
+@media print {
+    .sidebar-overlay,
+    #sidebar,
+    .btn,
+    .navbar,
+    .pagination {
+        display: none !important;
+    }
+    
+    .container {
+        max-width: none;
+        width: 100%;
+    }
+    
+    .table-responsive {
+        overflow: visible;
+    }
+}
+

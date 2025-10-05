@@ -1,0 +1,65 @@
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card shadow-lg p-4 rounded-4" style="max-width: 400px; width: 100%;">
+        <h3 class="text-center mb-4">Đăng nhập</h3>
+
+        <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)" novalidate>
+            <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+            <!-- Email -->
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" id="email" class="form-control" placeholder="Nhập email" name="email"
+                    [(ngModel)]="email" #emailCtrl="ngModel" required email
+                    [class.is-invalid]="(loginForm.submitted || emailCtrl.touched) && emailCtrl.invalid" />
+                <small class="text-danger"
+                    *ngIf="(loginForm.submitted || emailCtrl.touched) && emailCtrl.errors?.['required']">
+                    Email không được để trống
+                </small>
+                <small class="text-danger"
+                    *ngIf="(loginForm.submitted || emailCtrl.touched) && emailCtrl.errors?.['email']">
+                    Email không hợp lệ
+                </small>
+            </div>
+
+            <!-- Password -->
+            <div class="mb-3">
+                <label for="password" class="form-label">Mật khẩu</label>
+                <input type="password" id="password" class="form-control" placeholder="Nhập mật khẩu" name="password"
+                    [(ngModel)]="password" #passwordCtrl="ngModel" required minlength="6"
+                    [class.is-invalid]="(loginForm.submitted || passwordCtrl.touched) && passwordCtrl.invalid" />
+                <small class="text-danger"
+                    *ngIf="(loginForm.submitted || passwordCtrl.touched) && passwordCtrl.errors?.['required']">
+                    Mật khẩu không được để trống
+                </small>
+                <small class="text-danger"
+                    *ngIf="(loginForm.submitted || passwordCtrl.touched) && passwordCtrl.errors?.['minlength']">
+                    Mật khẩu tối thiểu 6 ký tự
+                </small>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 mb-3" [disabled]="loading">
+                {{ loading ? 'Đang đăng nhập...' : 'Đăng nhập' }}
+            </button>
+            <div class="text-center mt-2">
+                <small><a routerLink="/forgot-password">Quên mật khẩu?</a></small>
+            </div>
+
+
+        </form>
+
+        <div class="text-center mb-2">Hoặc đăng nhập với</div>
+
+        <div class="d-flex justify-content-between">
+            <button class="btn btn-outline-primary w-50 me-2">
+                <i class="fa fa-facebook me-2"></i> Facebook
+            </button>
+            <button class="btn btn-outline-danger w-50">
+                <i class="fa fa-google me-2"></i> Google
+            </button>
+        </div>
+
+        <div class="text-center mt-3">
+            <small>Chưa có tài khoản? <a routerLink="/register">Đăng ký ngay</a></small>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,125 @@
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card shadow-lg p-4 rounded-4" style="max-width: 480px; width: 100%;">
+        <h3 class="text-center mb-2">Đăng ký</h3>
+        <p class="text-center text-muted mb-4" *ngIf="step === 1">
+            Nhập thông tin để <strong>nhận OTP</strong> qua email
+        </p>
+        <p class="text-center text-muted mb-4" *ngIf="step === 2">
+            Nhập mã OTP đã gửi tới <strong>{{ email }}</strong> để tạo tài khoản
+        </p>
+
+        <!-- Alert chung -->
+        <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+        <div *ngIf="infoMessage" class="alert alert-info">{{ infoMessage }}</div>
+        <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+
+        <!-- STEP 1: nhập thông tin & gửi OTP -->
+        <form *ngIf="step === 1" #registerForm="ngForm" (ngSubmit)="sendOtp(registerForm)" novalidate>
+            <!-- Họ tên -->
+            <div class="mb-3">
+                <label for="name" class="form-label">Họ và tên</label>
+                <input type="text" id="name" class="form-control" placeholder="Nhập họ tên" name="fullname"
+                    [(ngModel)]="fullname" #fullNameCtrl="ngModel" required minlength="2"
+                    [class.is-invalid]="(registerForm.submitted || fullNameCtrl.touched) && fullNameCtrl.invalid" />
+                <small class="text-danger"
+                    *ngIf="(registerForm.submitted || fullNameCtrl.touched) && fullNameCtrl.errors?.['required']">
+                    Họ tên không được để trống
+                </small>
+                <small class="text-danger"
+                    *ngIf="(registerForm.submitted || fullNameCtrl.touched) && fullNameCtrl.errors?.['minlength']">
+                    Họ tên phải có ít nhất 2 ký tự
+                </small>
+            </div>
+
+            <!-- Số điện thoại -->
+            <div class="mb-3">
+                <label for="phone" class="form-label">Số điện thoại</label>
+                <input type="tel" id="phone" class="form-control" placeholder="Nhập số điện thoại" name="phonenumber"
+                    [(ngModel)]="phonenumber" #phoneCtrl="ngModel" required pattern="^0[0-9]{9}$"
+                    [class.is-invalid]="(registerForm.submitted || phoneCtrl.touched) && phoneCtrl.invalid" />
+                <small class="text-danger"
+                    *ngIf="(registerForm.submitted || phoneCtrl.touched) && phoneCtrl.errors?.['required']">
+                    SĐT không được để trống
+                </small>
+                <small class="text-danger"
+                    *ngIf="(registerForm.submitted || phoneCtrl.touched) && phoneCtrl.errors?.['pattern']">
+                    SĐT không hợp lệ (0xxxxxxxxx)
+                </small>
+            </div>
+
+            <!-- Email -->
+            <div class="mb-3">
+                <label for="regEmail" class="form-label">Email</label>
+                <input type="email" id="regEmail" class="form-control" placeholder="Nhập email" name="email"
+                    [(ngModel)]="email" #emailCtrl="ngModel" required email
+                    [class.is-invalid]="(registerForm.submitted || emailCtrl.touched) && emailCtrl.invalid" />
+                <small class="text-danger"
+                    *ngIf="(registerForm.submitted || emailCtrl.touched) && emailCtrl.errors?.['required']">
+                    Email không được để trống
+                </small>
+                <small class="text-danger"
+                    *ngIf="(registerForm.submitted || emailCtrl.touched) && emailCtrl.errors?.['email']">
+                    Email không hợp lệ
+                </small>
+            </div>
+
+            <!-- Mật khẩu -->
+            <div class="mb-3">
+                <label for="regPassword" class="form-label">Mật khẩu</label>
+                <input type="password" id="regPassword" class="form-control" placeholder="Tạo mật khẩu" name="password"
+                    [(ngModel)]="password" #passwordCtrl="ngModel" required minlength="6"
+                    [class.is-invalid]="(registerForm.submitted || passwordCtrl.touched) && passwordCtrl.invalid" />
+                <small class="text-danger"
+                    *ngIf="(registerForm.submitted || passwordCtrl.touched) && passwordCtrl.errors?.['required']">
+                    Mật khẩu không được để trống
+                </small>
+                <small class="text-danger"
+                    *ngIf="(registerForm.submitted || passwordCtrl.touched) && passwordCtrl.errors?.['minlength']">
+                    Mật khẩu tối thiểu 6 ký tự
+                </small>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 mb-2" [disabled]="loading">
+                {{ loading ? 'Đang gửi OTP...' : 'Gửi OTP' }}
+            </button>
+
+            <div class="text-center">
+                <small>Đã có tài khoản? <a routerLink="/login">Đăng nhập</a></small>
+            </div>
+        </form>
+
+        <!-- STEP 2: nhập OTP & tạo tài khoản -->
+        <form *ngIf="step === 2" #otpForm="ngForm" (ngSubmit)="verifyOtp(otpForm)" novalidate>
+            <div class="mb-3">
+                <label class="form-label">Mã OTP</label>
+                <input type="text" class="form-control" placeholder="Nhập mã OTP gồm 6 số" name="otp" [(ngModel)]="otp"
+                    #otpCtrl="ngModel" required pattern="^[0-9]{6}$"
+                    [class.is-invalid]="(otpForm.submitted || otpCtrl.touched) && otpCtrl.invalid" />
+                <small class="text-danger"
+                    *ngIf="(otpForm.submitted || otpCtrl.touched) && otpCtrl.errors?.['required']">
+                    Vui lòng nhập OTP
+                </small>
+                <small class="text-danger"
+                    *ngIf="(otpForm.submitted || otpCtrl.touched) && otpCtrl.errors?.['pattern']">
+                    OTP phải gồm 6 chữ số
+                </small>
+            </div>
+
+            <button type="submit" class="btn btn-success w-100 mb-2" [disabled]="loading">
+                {{ loading ? 'Đang xác thực...' : 'Xác thực & Tạo tài khoản' }}
+            </button>
+
+            <button type="button" class="btn btn-outline-secondary w-100" (click)="backToStep1()" [disabled]="loading">
+                Quay lại chỉnh thông tin
+            </button>
+
+            <div class="text-center mt-3">
+                <small>Không nhận được OTP?
+                    <a href="#" (click)="resendOtp($event)" [class.disabled]="resendCooldown > 0">
+                        Gửi lại {{ resendCooldown > 0 ? '(' + resendCooldown + 's)' : '' }}
+                    </a>
+                </small>
+            </div>
+        </form>
+    </div>
+</div>

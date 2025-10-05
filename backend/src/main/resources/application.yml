@@ -1,0 +1,56 @@
+spring:
+  application:
+    name: ${SPRING_APP_NAME:ClothingStore}
+
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    show-sql: true
+
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+
+  mail:
+    host: ${SPRING_MAIL_HOST:}
+    port: ${SPRING_MAIL_PORT:25}
+    username: ${SPRING_MAIL_USERNAME:}
+    password: ${SPRING_MAIL_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: ${SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH:false}
+          starttls:
+            enable: ${SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE:false}
+
+backend:
+  jwt:
+    base64-secret: ${JWT_SECRET}
+    access-token-validity-in-seconds: ${JWT_ACCESS_TOKEN_VALIDITY}
+    refresh-token-validity-in-seconds: ${JWT_REFRESH_TOKEN_VALIDITY}
+
+  upload-file:
+    base-uri: ${UPLOAD_BASE_URI}
+
+cloudinary:
+  cloud-name: ${CLOUD_NAME}
+  api-key: ${CLOUD_API_KEY}
+  api-secret: ${CLOUD_API_SECRET}
+
+vnpay:
+  pay-url: ${VNPAY_PAY_URL}
+  return-url: ${VNPAY_RETURN_URL}
+  tmn-code: ${VNPAY_TMN_CODE}
+  secret-key: ${VNPAY_SECRET_KEY}
+  api-url: ${VNPAY_API_URL}
+
+app:
+  frontend-url: ${FRONTEND_URL}

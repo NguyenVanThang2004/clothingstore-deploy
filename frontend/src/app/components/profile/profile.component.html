@@ -1,0 +1,128 @@
+<div class="container py-5">
+    <h2 class="mb-4">Thông tin cá nhân</h2>
+
+    <div class="card shadow-sm rounded-3">
+        <div class="card-body">
+            <form #profileForm="ngForm" (ngSubmit)="updateProfile(profileForm)">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Họ và tên</label>
+                        <input type="text" [(ngModel)]="user.fullName" name="fullName" class="form-control" required
+                            minlength="2" />
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Email</label>
+                        <input type="email" [(ngModel)]="user.email" name="email" class="form-control" disabled />
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Số điện thoại</label>
+                        <input type="text" [(ngModel)]="user.phoneNumber" name="phoneNumber" class="form-control"
+                            disabled />
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Địa chỉ</label>
+                        <input type="text" [(ngModel)]="user.address" name="address" class="form-control" required />
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Ngày sinh</label>
+                        <input type="date" [(ngModel)]="user.dateOfBirth" name="dateOfBirth" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end gap-2">
+                    <button type="button" class="btn btn-outline-secondary" (click)="openChangePassword()">
+                        Đổi mật khẩu
+                    </button>
+                    <button type="submit" class="btn btn-primary" [disabled]="profileForm.invalid">
+                        Cập nhật
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal đổi mật khẩu -->
+    <div class="modal fade" [ngClass]="{'show d-block': showChangePass}" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content rounded-3">
+                <div class="modal-header">
+                    <h5 class="modal-title">Đổi mật khẩu</h5>
+                    <button type="button" class="btn-close" aria-label="Close" (click)="closeChangePassword()"></button>
+                </div>
+
+                <form #changePassForm="ngForm" (ngSubmit)="submitChangePassword(changePassForm)" novalidate>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">Mật khẩu hiện tại</label>
+                            <div class="input-group">
+                                <input [type]="showOld ? 'text' : 'password'" class="form-control"
+                                    [(ngModel)]="changePass.oldPassword" name="oldPassword" #oldCtrl="ngModel" required
+                                    minlength="6" />
+                                <button class="btn btn-outline-secondary" type="button" (click)="showOld = !showOld">
+                                    {{ showOld ? 'Ẩn' : 'Hiện' }}
+                                </button>
+                            </div>
+                            <small class="text-danger"
+                                *ngIf="(changePassForm.submitted || oldCtrl.touched) && oldCtrl.invalid">
+                                Vui lòng nhập mật khẩu hiện tại (≥ 6 ký tự)
+                            </small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Mật khẩu mới</label>
+                            <div class="input-group">
+                                <input [type]="showNew ? 'text' : 'password'" class="form-control"
+                                    [(ngModel)]="changePass.newPassword" name="newPassword" #newCtrl="ngModel" required
+                                    minlength="6" />
+                                <button class="btn btn-outline-secondary" type="button" (click)="showNew = !showNew">
+                                    {{ showNew ? 'Ẩn' : 'Hiện' }}
+                                </button>
+                            </div>
+                            <small class="text-danger"
+                                *ngIf="(changePassForm.submitted || newCtrl.touched) && newCtrl.invalid">
+                                Mật khẩu mới tối thiểu 6 ký tự
+                            </small>
+                        </div>
+
+                        <div class="mb-2">
+                            <label class="form-label">Nhập lại mật khẩu mới</label>
+                            <div class="input-group">
+                                <input [type]="showRe ? 'text' : 'password'" class="form-control"
+                                    [(ngModel)]="changePass.reEnterPassword" name="reEnterPassword" #reCtrl="ngModel"
+                                    required minlength="6" />
+                                <button class="btn btn-outline-secondary" type="button" (click)="showRe = !showRe">
+                                    {{ showRe ? 'Ẩn' : 'Hiện' }}
+                                </button>
+                            </div>
+                            <small class="text-danger"
+                                *ngIf="(changePassForm.submitted || reCtrl.touched) && (!reCtrl.value || changePass.reEnterPassword !== changePass.newPassword)">
+                                Nhập lại mật khẩu không khớp
+                            </small>
+                        </div>
+
+                        <div *ngIf="changePassError" class="alert alert-danger mt-3">{{ changePassError }}</div>
+                        <div *ngIf="changePassSuccess" class="alert alert-success mt-3">{{ changePassSuccess }}</div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" (click)="closeChangePassword()"
+                            [disabled]="changePassLoading">
+                            Đóng
+                        </button>
+                        <button type="submit" class="btn btn-primary" [disabled]="changePassLoading">
+                            {{ changePassLoading ? 'Đang đổi...' : 'Xác nhận đổi mật khẩu' }}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-backdrop fade show" *ngIf="showChangePass"></div>
+</div>

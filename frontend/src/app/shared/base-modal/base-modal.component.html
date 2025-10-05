@@ -1,0 +1,19 @@
+<div class="modal fade" [ngClass]="{'show d-block': isOpen}" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ modalTitle }}</h5>
+                <button type="button" class="btn-close" (click)="closeModal()"></button>
+            </div>
+            <div class="modal-body">
+                <ng-content></ng-content> <!-- form dài vẫn cuộn được -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+                <button type="button" class="btn btn-primary" (click)="handleButtonFunc()">{{ contentButton }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-backdrop fade show" *ngIf="isOpen"></div>

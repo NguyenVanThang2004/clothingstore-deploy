@@ -1,0 +1,223 @@
+<div class="container py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">📱 Demo Responsive Admin</h4>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info">
+                        <h5><i class="fa fa-info-circle me-2"></i>Hướng dẫn test responsive</h5>
+                        <p class="mb-0">Sử dụng DevTools (F12) để thay đổi kích thước màn hình và kiểm tra responsive:</p>
+                        <ul class="mb-0 mt-2">
+                            <li><strong>Mobile:</strong> 375px - 767px</li>
+                            <li><strong>Tablet:</strong> 768px - 991px</li>
+                            <li><strong>Desktop:</strong> 992px+</li>
+                        </ul>
+                    </div>
+
+                    <!-- Test các breakpoints -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-12 col-sm-6 col-lg-4">
+                            <div class="card border-primary">
+                                <div class="card-body text-center">
+                                    <i class="fa fa-mobile-alt fa-3x text-primary mb-2"></i>
+                                    <h6>Mobile View</h6>
+                                    <small class="text-muted">Sidebar ẩn, bảng cuộn ngang</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-lg-4">
+                            <div class="card border-warning">
+                                <div class="card-body text-center">
+                                    <i class="fa fa-tablet-alt fa-3x text-warning mb-2"></i>
+                                    <h6>Tablet View</h6>
+                                    <small class="text-muted">Layout tối ưu cho tablet</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-lg-4">
+                            <div class="card border-success">
+                                <div class="card-body text-center">
+                                    <i class="fa fa-desktop fa-3x text-success mb-2"></i>
+                                    <h6>Desktop View</h6>
+                                    <small class="text-muted">Sidebar hiển thị, bảng đầy đủ</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Test bảng responsive -->
+                    <h5 class="mb-3">Test Bảng Responsive</h5>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th class="d-none d-md-table-cell">ID</th>
+                                    <th>Tên</th>
+                                    <th class="d-none d-lg-table-cell">Email</th>
+                                    <th class="d-none d-xl-table-cell">Địa chỉ</th>
+                                    <th>Trạng thái</th>
+                                    <th>Hành động</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="d-none d-md-table-cell">1</td>
+                                    <td>
+                                        <div class="d-flex flex-column">
+                                            <strong>Nguyễn Văn A</strong>
+                                            <small class="text-muted d-lg-none">email@example.com</small>
+                                            <small class="text-muted d-xl-none">Hà Nội, Việt Nam</small>
+                                        </div>
+                                    </td>
+                                    <td class="d-none d-lg-table-cell">email@example.com</td>
+                                    <td class="d-none d-xl-table-cell">Hà Nội, Việt Nam</td>
+                                    <td><span class="badge bg-success">Hoạt động</span></td>
+                                    <td>
+                                        <div class="btn-group-vertical btn-group-sm d-flex d-md-inline-flex" role="group">
+                                            <button class="btn btn-primary btn-sm mb-1" title="Xem">
+                                                <i class="fa fa-eye"></i>
+                                            </button>
+                                            <button class="btn btn-warning btn-sm mb-1" title="Sửa">
+                                                <i class="fa fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-danger btn-sm" title="Xóa">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="d-none d-md-table-cell">2</td>
+                                    <td>
+                                        <div class="d-flex flex-column">
+                                            <strong>Trần Thị B</strong>
+                                            <small class="text-muted d-lg-none">user2@example.com</small>
+                                            <small class="text-muted d-xl-none">TP.HCM, Việt Nam</small>
+                                        </div>
+                                    </td>
+                                    <td class="d-none d-lg-table-cell">user2@example.com</td>
+                                    <td class="d-none d-xl-table-cell">TP.HCM, Việt Nam</td>
+                                    <td><span class="badge bg-warning">Chờ duyệt</span></td>
+                                    <td>
+                                        <div class="btn-group-vertical btn-group-sm d-flex d-md-inline-flex" role="group">
+                                            <button class="btn btn-primary btn-sm mb-1" title="Xem">
+                                                <i class="fa fa-eye"></i>
+                                            </button>
+                                            <button class="btn btn-warning btn-sm mb-1" title="Sửa">
+                                                <i class="fa fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-danger btn-sm" title="Xóa">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Test form responsive -->
+                    <h5 class="mb-3 mt-4">Test Form Responsive</h5>
+                    <div class="card">
+                        <div class="card-body">
+                            <form>
+                                <div class="row g-3">
+                                    <div class="col-12 col-md-6">
+                                        <label class="form-label">Tên đầy đủ</label>
+                                        <input type="text" class="form-control" placeholder="Nhập tên đầy đủ">
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <label class="form-label">Email</label>
+                                        <input type="email" class="form-control" placeholder="Nhập email">
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <label class="form-label">Số điện thoại</label>
+                                        <input type="tel" class="form-control" placeholder="Nhập SĐT">
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <label class="form-label">Vai trò</label>
+                                        <select class="form-select">
+                                            <option>Admin</option>
+                                            <option>User</option>
+                                            <option>Guest</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label">Mô tả</label>
+                                        <textarea class="form-control" rows="3" placeholder="Nhập mô tả"></textarea>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="d-flex flex-column flex-sm-row gap-2">
+                                            <button type="submit" class="btn btn-primary">
+                                                <i class="fa fa-save me-1"></i> Lưu
+                                            </button>
+                                            <button type="button" class="btn btn-secondary">
+                                                <i class="fa fa-times me-1"></i> Hủy
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Test buttons responsive -->
+                    <h5 class="mb-3 mt-4">Test Buttons Responsive</h5>
+                    <div class="d-flex flex-column flex-sm-row gap-2 mb-3">
+                        <button class="btn btn-primary">
+                            <i class="fa fa-plus me-1"></i> <span class="d-none d-sm-inline">Thêm mới</span>
+                            <span class="d-sm-none">Thêm</span>
+                        </button>
+                        <button class="btn btn-success">
+                            <i class="fa fa-download me-1"></i> <span class="d-none d-sm-inline">Xuất Excel</span>
+                            <span class="d-sm-none">Excel</span>
+                        </button>
+                        <button class="btn btn-info">
+                            <i class="fa fa-print me-1"></i> <span class="d-none d-sm-inline">In báo cáo</span>
+                            <span class="d-sm-none">In</span>
+                        </button>
+                    </div>
+
+                    <!-- Test modal responsive -->
+                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#demoModal">
+                        <i class="fa fa-external-link-alt me-1"></i> Test Modal Responsive
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Demo Modal -->
+<div class="modal fade" id="demoModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fa fa-mobile-alt me-2"></i>Modal Responsive Demo
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>Modal này sẽ tự động điều chỉnh kích thước theo màn hình:</p>
+                <ul>
+                    <li><strong>Mobile:</strong> Modal chiếm gần toàn màn hình</li>
+                    <li><strong>Tablet:</strong> Modal có margin hợp lý</li>
+                    <li><strong>Desktop:</strong> Modal có kích thước tối ưu</li>
+                </ul>
+                
+                <div class="alert alert-success">
+                    <h6><i class="fa fa-check-circle me-2"></i>Responsive hoạt động tốt!</h6>
+                    <p class="mb-0">Admin panel đã được tối ưu cho tất cả các thiết bị.</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>
+

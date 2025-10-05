@@ -1,0 +1,386 @@
+<div class="card shadow p-3">
+    <!-- Header -->
+    <div class="d-flex flex-column flex-lg-row justify-content-between align-items-start align-items-lg-center mb-3 gap-3">
+        <h4 class="mb-0">Quản lý sản phẩm</h4>
+        <div class="d-flex flex-column flex-sm-row gap-2 w-100 w-lg-auto">
+            <!-- Search -->
+            <input class="form-control" style="min-width:200px" [(ngModel)]="keyword" (keyup.enter)="applyFilter()"
+                placeholder="Tìm kiếm..." />
+
+            <!-- Category filter -->
+            <select class="form-select" style="min-width:200px" [(ngModel)]="selectedCategoryId" (change)="applyFilter()">
+                <option [ngValue]="null">-- Tất cả danh mục --</option>
+                <option *ngFor="let cat of categories" [ngValue]="cat.id">{{cat.name}}</option>
+            </select>
+
+            <button class="btn btn-success" (click)="openAdd()">
+                <i class="fa fa-plus me-1"></i> <span class="d-none d-sm-inline">Thêm sản phẩm</span>
+                <span class="d-sm-none">Thêm</span>
+            </button>
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <!-- Table sản phẩm -->
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th class="d-none d-md-table-cell">Mã</th>
+                    <th>Tên sản phẩm</th>
+                    <th class="d-none d-lg-table-cell">Giá gốc</th>
+                    <th class="d-none d-md-table-cell">Danh mục</th>
+                    <th class="d-none d-lg-table-cell">Ngày tạo</th>
+                    <th class="d-none d-xl-table-cell">Ngày cập nhật</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody *ngIf="!loading; else loadingTpl">
+                <tr *ngFor="let p of products">
+                    <td class="d-none d-md-table-cell">{{ p.id }}</td>
+                    <td>
+                        <div class="d-flex flex-column">
+                            <strong>{{ p.name }}</strong>
+                            <small class="text-muted d-md-none">
+                                ID: {{ p.id }} | Giá: {{ p.price | number }}đ | {{ p.category.name }}
+                            </small>
+                        </div>
+                    </td>
+                    <td class="d-none d-lg-table-cell">{{ p.price | number }}đ</td>
+                    <td class="d-none d-md-table-cell">{{ p.category.name }}</td>
+                    <td class="d-none d-lg-table-cell">{{ ((p.createdAt) | date:'dd/MM/yyyy':'Asia/Bangkok') ?? '—' }}</td>
+                    <td class="d-none d-xl-table-cell">{{ p.updatedAt ? (p.updatedAt | date:'dd/MM/yyyy':'Asia/Bangkok') : '—' }}</td>
+                    <td>
+                        <div class="btn-group-vertical btn-group-sm d-flex d-md-inline-flex" role="group">
+                            <button class="btn btn-primary btn-sm mb-1" (click)="openDetail(p)" title="Xem chi tiết">
+                                <i class="fa fa-eye"></i>
+                            </button>
+                            <button class="btn btn-warning btn-sm mb-1" (click)="openEdit(p)" title="Sửa">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                            <button class="btn btn-danger btn-sm mb-1" (click)="openDelete()" title="Xóa">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                            <button class="btn btn-info btn-sm" (click)="openVariants(p)" title="Biến thể">
+                                <i class="fa fa-layer-group"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+            <ng-template #loadingTpl>
+                <tbody>
+                    <tr>
+                        <td colspan="7" class="text-center">Đang tải...</td>
+                    </tr>
+                </tbody>
+            </ng-template>
+        </table>
+    </div>
+</div>
+
+<!-- Pagination -->
+<div class="d-flex flex-column flex-sm-row justify-content-between align-items-center mt-3 gap-2">
+    <div class="text-center text-sm-start">
+        <small class="text-muted">Tổng: {{ meta.total }} | Trang {{ meta.page }} / {{ meta.pages }}</small>
+    </div>
+    <div class="btn-group">
+        <button class="btn btn-outline-secondary" (click)="prev()" [disabled]="meta.page<=1">«</button>
+        <button class="btn btn-outline-secondary" (click)="next()" [disabled]="meta.page>=meta.pages">»</button>
+    </div>
+</div>
+
+<!-- ADD PRODUCT MODAL -->
+<div #productAddModal class="modal fade" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content">
+            <form (ngSubmit)="saveAll()" #productForm="ngForm" novalidate>
+                <div class="modal-header">
+                    <h5 class="modal-title">Thêm sản phẩm</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" [disabled]="saving"></button>
+                </div>
+
+                <div class="modal-body">
+                    <!-- Tabs -->
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link" [class.active]="step===1">1. Thông tin</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" [class.active]="step===2">2. Ảnh</a>
+                        </li>
+                    </ul>
+
+                    <!-- Step 1 -->
+                    <div *ngIf="step===1" class="mt-3">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Tên sản phẩm</label>
+                                <input class="form-control" name="name" [(ngModel)]="formAdd.name" required
+                                    minlength="2" />
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Giá gốc</label>
+                                <input type="number" class="form-control" name="price" [(ngModel)]="formAdd.price"
+                                    required min="0" />
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Danh mục</label>
+                                <select class="form-select" name="categoryId" [(ngModel)]="formAdd.categoryId" required>
+                                    <option value="0">-- Chọn --</option>
+                                    <option *ngFor="let cat of categories" [value]="cat.id">{{cat.name}}</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label">Mô tả</label>
+                                <textarea class="form-control" name="description"
+                                    [(ngModel)]="formAdd.description"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div *ngIf="step===2" class="mt-3">
+                        <input type="file" multiple (change)="onFilesSelected($event)" />
+                        <div class="d-flex flex-wrap gap-2 mt-2">
+                            <div *ngFor="let img of formAdd.images; let i=index" class="position-relative">
+                                <img [src]="img.url" class="img-thumbnail" width="120" />
+                                <div class="form-check">
+                                    <input type="radio" class="form-check-input" name="thumbnail" [value]="i"
+                                        [(ngModel)]="thumbnailIndex" />
+                                    <label class="form-check-label">Thumbnail</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" (click)="prevStep()" [disabled]="step===1">«
+                        Trước</button>
+                    <button class="btn btn-secondary" type="button" (click)="nextStep(productForm)"
+                        [disabled]="step===2">
+                        Tiếp »
+                    </button>
+
+                    <button class="btn btn-primary" type="submit" [disabled]="saving || step!==2">
+                        {{ saving ? 'Đang lưu...' : 'Lưu sản phẩm' }}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- VIEW PRODUCT MODAL -->
+<div #productDetailModal class="modal fade" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Chi tiết sản phẩm</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body" *ngIf="selectedProduct">
+                <!-- Thông tin chung -->
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <strong>Tên sản phẩm:</strong> {{ selectedProduct.name }}
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Giá gốc:</strong> {{ selectedProduct.price | number }} đ
+                    </div>
+                    <div class="col-md-12">
+                        <strong>Danh mục:</strong> {{ selectedProduct.category.name }}
+                    </div>
+                    <div class="col-md-12 mt-2">
+                        <strong>Mô tả:</strong>
+                        <p>{{ selectedProduct.description }}</p>
+                    </div>
+                </div>
+
+                <!-- Ảnh -->
+                <div class="mb-3">
+                    <h6>Ảnh sản phẩm</h6>
+                    <div class="d-flex flex-wrap gap-2">
+                        <img *ngFor="let img of productImages" [src]="img.url" class="img-thumbnail" width="120"
+                            [class.border-primary]="img.thumbnail" />
+                    </div>
+
+                </div>
+
+                <!-- Biến thể -->
+                <div>
+                    <h6>Biến thể</h6>
+                    <table class="table table-bordered table-sm">
+                        <thead>
+                            <tr>
+                                <th>Màu</th>
+                                <th>Size</th>
+                                <th>Giá</th>
+                                <th>Tồn kho</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let v of productVariants">
+                                <td>{{ v.color }}</td>
+                                <td>{{ v.size }}</td>
+                                <td>{{ v.price | number }}</td>
+                                <td>{{ v.stockQuantity }}</td>
+                            </tr>
+                            <tr *ngIf="productVariants.length === 0">
+                                <td colspan="4" class="text-center text-muted">Chưa có biến thể</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- EDIT PRODUCT MODAL -->
+<div #productEditModal class="modal fade" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <form (ngSubmit)="saveEdit(editForm)" #editForm="ngForm" novalidate>
+                <div class="modal-header">
+                    <h5 class="modal-title">Sửa sản phẩm</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" [disabled]="saving"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Tên sản phẩm</label>
+                            <input class="form-control" name="name" [(ngModel)]="formEdit.name" required
+                                minlength="2" />
+                            <div class="text-danger small" *ngIf="editForm.submitted && !formEdit.name">Bắt buộc</div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Giá gốc</label>
+                            <input type="number" class="form-control" name="price" [(ngModel)]="formEdit.price" required
+                                min="0" />
+                            <div class="text-danger small" *ngIf="editForm.submitted && (formEdit.price==null)">Bắt buộc
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Danh mục</label>
+                            <select class="form-select" name="categoryId" [(ngModel)]="formEdit.categoryId" required>
+                                <option [ngValue]="0">-- Chọn --</option>
+                                <option *ngFor="let cat of categories" [ngValue]="cat.id">{{ cat.name }}</option>
+                            </select>
+
+                            <div class="text-danger small" *ngIf="editForm.submitted && !formEdit.categoryId">Bắt buộc
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label">Mô tả</label>
+                            <textarea class="form-control" name="description" rows="3"
+                                [(ngModel)]="formEdit.description"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal"
+                        [disabled]="saving">Hủy</button>
+                    <button class="btn btn-primary" type="submit" [disabled]="saving">
+                        {{ saving ? 'Đang lưu...' : 'Lưu thay đổi' }}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- VARIANT MANAGEMENT MODAL -->
+<div #variantModal class="modal fade" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Quản lý biến thể - {{ selectedProduct?.name }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <table class="table table-bordered table-sm">
+                    <thead>
+                        <tr>
+                            <th>Màu</th>
+                            <th>Size</th>
+                            <th>Giá</th>
+                            <th>Tồn kho</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let v of productVariants">
+                            <td>{{ v.color }}</td>
+                            <td>{{ v.size }}</td>
+                            <td>{{ v.price | number }}</td>
+                            <td>{{ v.stockQuantity }}</td>
+                            <td>
+                                <button class="btn btn-sm btn-primary" (click)="openVariantEdit(v)">Sửa</button>
+                            </td>
+                        </tr>
+                        <tr *ngIf="productVariants.length === 0">
+                            <td colspan="5" class="text-center text-muted">Chưa có biến thể</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- Form thêm / sửa biến thể -->
+                <form (ngSubmit)="saveVariant()" #variantForm="ngForm" class="row g-2 align-items-end mt-3">
+                    <div class="col-md-3">
+                        <label>Màu</label>
+                        <select class="form-select" [(ngModel)]="variantFormModel.color" name="color"
+                            [disabled]="!!variantEditingId" required>
+                            <option *ngFor="let c of colors" [value]="c">{{c}}</option>
+                        </select>
+
+                    </div>
+                    <div class="col-md-2">
+                        <label>Size</label>
+                        <select class="form-select" [(ngModel)]="variantFormModel.size" name="size"
+                            [disabled]="!!variantEditingId" required>
+                            <option *ngFor="let s of sizes" [value]="s">{{s}}</option>
+                        </select>
+
+                    </div>
+                    <div class="col-md-2">
+                        <label>Giá</label>
+                        <input type="number" class="form-control" [(ngModel)]="variantFormModel.price" name="price"
+                            required min="0" />
+                    </div>
+                    <div class="col-md-2">
+                        <label>Tồn kho</label>
+                        <input type="number" class="form-control" [(ngModel)]="variantFormModel.stockQuantity"
+                            name="stock" required min="0" />
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-success w-100" type="submit">
+                            {{ variantEditingId ? 'Cập nhật' : 'Thêm' }} biến thể
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

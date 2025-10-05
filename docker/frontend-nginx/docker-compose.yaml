@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  frontend:
+    build:
+      context: ../../frontend # trỏ tới thư mục chứa Dockerfile + code Angular
+      dockerfile: Dockerfile
+    image: frontend_clothing:latest
+    container_name: clothing_frontend
+    ports:
+      - "4200:80" # mở http://localhost:4200
+    networks:
+      - clothing_net
+
+networks:
+  clothing_net:
+    driver: bridge

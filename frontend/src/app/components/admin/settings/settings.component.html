@@ -1,0 +1,351 @@
+<div class="container py-4">
+    <!-- Header -->
+    <div class="d-flex flex-column flex-lg-row justify-content-between align-items-start align-items-lg-center mb-4 gap-3">
+        <div>
+            <h3 class="mb-0">Quản lý Banner</h3>
+        </div>
+        <div class="d-flex flex-column flex-sm-row gap-2 w-100 w-lg-auto">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalUpsertBanner">
+                <i class="fa fa-plus me-1"></i> <span class="d-none d-sm-inline">Thêm banner</span>
+                <span class="d-sm-none">Thêm</span>
+            </button>
+            <button class="btn btn-outline-secondary">
+                <i class="fa fa-arrows-alt me-1"></i> <span class="d-none d-sm-inline">Sắp xếp nhanh</span>
+                <span class="d-sm-none">Sắp xếp</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Tabs vị trí -->
+    <ul class="nav nav-pills nav-fill mb-4" id="bannerTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="tab-slider" data-bs-toggle="pill" data-bs-target="#pane-slider"
+                type="button" role="tab" aria-controls="pane-slider" aria-selected="true">
+                <span class="d-none d-sm-inline">Banner Slider (đầu trang)</span>
+                <span class="d-sm-none">Slider</span>
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="tab-tile" data-bs-toggle="pill" data-bs-target="#pane-tile" type="button"
+                role="tab" aria-controls="pane-tile" aria-selected="false">
+                <span class="d-none d-sm-inline">Banner Ô nhỏ (tile)</span>
+                <span class="d-sm-none">Tile</span>
+            </button>
+        </li>
+    </ul>
+
+    <div class="tab-content" id="bannerTabsContent">
+        <!-- SLIDER LIST -->
+        <div class="tab-pane fade show active" id="pane-slider" role="tabpanel" aria-labelledby="tab-slider">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h5 class="mb-0">Danh sách banner – Vị trí: SLIDER</h5>
+                        <span class="text-muted small">Kéo–thả (sau này) để sắp xếp theo <strong>Thứ tự</strong></span>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th class="d-none d-md-table-cell" style="width:48px;">#</th>
+                                    <th style="width:82px;">Ảnh</th>
+                                    <th>Tiêu đề</th>
+                                    <th class="d-none d-lg-table-cell">Phụ đề</th>
+                                    <th class="d-none d-xl-table-cell">Link</th>
+                                    <th class="text-center d-none d-lg-table-cell" style="width:110px;">Thứ tự</th>
+                                    <th class="text-center d-none d-md-table-cell" style="width:90px;">Trạng thái</th>
+                                    <th class="text-center d-none d-xl-table-cell" style="width:200px;">Hiệu lực</th>
+                                    <th class="text-end" style="width:170px;">Hành động</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Row mẫu 1 -->
+                                <tr>
+                                    <td class="text-muted d-none d-md-table-cell"><i class="fa fa-grip-vertical"></i></td>
+                                    <td>
+                                        <img src="/assets/images/slide-01.jpg" alt="banner" class="rounded"
+                                            style="width:72px;height:48px;object-fit:cover;">
+                                    </td>
+                                    <td>
+                                        <div class="d-flex flex-column">
+                                            <strong>Giảm 30% BST Thu Đông</strong>
+                                            <small class="text-muted d-lg-none">Chỉ trong tuần này</small>
+                                            <small class="text-muted d-xl-none">#1 | Hiển thị</small>
+                                        </div>
+                                    </td>
+                                    <td class="d-none d-lg-table-cell">Chỉ trong tuần này</td>
+                                    <td class="d-none d-xl-table-cell text-truncate" style="max-width:220px;">
+                                        <a href="/collections/thu-dong"
+                                            class="text-decoration-none">/collections/thu-dong</a>
+                                    </td>
+                                    <td class="text-center d-none d-lg-table-cell">1</td>
+                                    <td class="text-center d-none d-md-table-cell">
+                                        <span class="badge bg-success">Hiển thị</span>
+                                    </td>
+                                    <td class="text-center d-none d-xl-table-cell">
+                                        <div class="small">Từ: 01/09/2025</div>
+                                        <div class="small">Đến: 30/09/2025</div>
+                                    </td>
+                                    <td class="text-end">
+                                        <div class="btn-group-vertical btn-group-sm d-flex d-md-inline-flex" role="group">
+                                            <button class="btn btn-outline-secondary btn-sm mb-1" title="Ẩn/Hiện"><i
+                                                    class="fa fa-eye-slash"></i></button>
+                                            <button class="btn btn-warning btn-sm mb-1" data-bs-toggle="modal"
+                                                data-bs-target="#modalUpsertBanner" title="Sửa">
+                                                <i class="fa fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                                data-bs-target="#modalConfirmDelete" title="Xoá">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- Row mẫu 2 -->
+                                <tr>
+                                    <td class="text-muted"><i class="fa fa-grip-vertical"></i></td>
+                                    <td>
+                                        <img src="/assets/images/slide-02.jpg" alt="banner" class="rounded"
+                                            style="width:72px;height:48px;object-fit:cover;">
+                                    </td>
+                                    <td>New Arrivals</td>
+                                    <td>Hàng về mỗi ngày</td>
+                                    <td class="text-truncate" style="max-width:220px;">
+                                        <a href="/collections/new" class="text-decoration-none">/collections/new</a>
+                                    </td>
+                                    <td class="text-center">2</td>
+                                    <td class="text-center">
+                                        <span class="badge bg-secondary">Ẩn</span>
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="small">Từ: —</div>
+                                        <div class="small">Đến: —</div>
+                                    </td>
+                                    <td class="text-end">
+                                        <div class="btn-group">
+                                            <button class="btn btn-outline-secondary btn-sm" title="Ẩn/Hiện"><i
+                                                    class="fa fa-eye"></i></button>
+                                            <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                                                data-bs-target="#modalUpsertBanner" title="Sửa">
+                                                <i class="fa fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                                data-bs-target="#modalConfirmDelete" title="Xoá">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- TILE LIST -->
+        <div class="tab-pane fade" id="pane-tile" role="tabpanel" aria-labelledby="tab-tile">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h5 class="mb-0">Danh sách banner – Vị trí: TILE</h5>
+                        <span class="text-muted small">Hiển thị thành 2–3 ô nhỏ dưới slider</span>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th style="width:48px;">#</th>
+                                    <th style="width:82px;">Ảnh</th>
+                                    <th>Tiêu đề</th>
+                                    <th>Phụ đề</th>
+                                    <th>Link</th>
+                                    <th class="text-center" style="width:110px;">Thứ tự</th>
+                                    <th class="text-center" style="width:90px;">Trạng thái</th>
+                                    <th class="text-end" style="width:170px;">Hành động</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Row mẫu 1 -->
+                                <tr>
+                                    <td class="text-muted"><i class="fa fa-grip-vertical"></i></td>
+                                    <td>
+                                        <img src="/assets/images/banner-01.jpg" alt="banner" class="rounded"
+                                            style="width:72px;height:48px;object-fit:cover;">
+                                    </td>
+                                    <td>Miễn phí vận chuyển</td>
+                                    <td>Đơn từ 499k</td>
+                                    <td class="text-truncate" style="max-width:220px;">
+                                        <a href="/policies/shipping" class="text-decoration-none">/policies/shipping</a>
+                                    </td>
+                                    <td class="text-center">1</td>
+                                    <td class="text-center"><span class="badge bg-success">Hiển thị</span></td>
+                                    <td class="text-end">
+                                        <div class="btn-group">
+                                            <button class="btn btn-outline-secondary btn-sm" title="Ẩn/Hiện"><i
+                                                    class="fa fa-eye-slash"></i></button>
+                                            <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                                                data-bs-target="#modalUpsertBanner" title="Sửa">
+                                                <i class="fa fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                                data-bs-target="#modalConfirmDelete" title="Xoá">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- Row mẫu 2 -->
+                                <tr>
+                                    <td class="text-muted"><i class="fa fa-grip-vertical"></i></td>
+                                    <td>
+                                        <img src="/assets/images/banner-02.jpg" alt="banner" class="rounded"
+                                            style="width:72px;height:48px;object-fit:cover;">
+                                    </td>
+                                    <td>Ưu đãi thành viên</td>
+                                    <td>Giảm thêm 10%</td>
+                                    <td class="text-truncate" style="max-width:220px;">
+                                        <a href="/membership" class="text-decoration-none">/membership</a>
+                                    </td>
+                                    <td class="text-center">2</td>
+                                    <td class="text-center"><span class="badge bg-success">Hiển thị</span></td>
+                                    <td class="text-end">
+                                        <div class="btn-group">
+                                            <button class="btn btn-outline-secondary btn-sm" title="Ẩn/Hiện"><i
+                                                    class="fa fa-eye-slash"></i></button>
+                                            <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                                                data-bs-target="#modalUpsertBanner" title="Sửa">
+                                                <i class="fa fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                                data-bs-target="#modalConfirmDelete" title="Xoá">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: Thêm/Sửa Banner (tĩnh) -->
+    <div class="modal fade" id="modalUpsertBanner" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fa fa-image me-2"></i>Thêm / Sửa Banner
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+                </div>
+
+                <div class="modal-body">
+                    <form>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Tiêu đề</label>
+                                <input type="text" class="form-control" placeholder="Ví dụ: Giảm 30% BST Thu Đông">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Phụ đề</label>
+                                <input type="text" class="form-control" placeholder="Chỉ trong tuần này">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Hình ảnh (URL)</label>
+                                <input type="text" class="form-control" placeholder="https://.../banner.jpg">
+                                <div class="form-text">Hoặc để trống và upload sau.</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Liên kết khi bấm (URL)</label>
+                                <input type="text" class="form-control" placeholder="/collections/thu-dong">
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label">Vị trí hiển thị</label>
+                                <select class="form-select">
+                                    <option value="SLIDER" selected>SLIDER (banner lớn)</option>
+                                    <option value="TILE">TILE (ô nhỏ)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Thứ tự</label>
+                                <input type="number" class="form-control" min="0" value="0">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label d-block">Trạng thái</label>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="switchActive" checked>
+                                    <label class="form-check-label" for="switchActive">Hiển thị</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Hiệu lực từ (optional)</label>
+                                <input type="datetime-local" class="form-control">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Hiệu lực đến (optional)</label>
+                                <input type="datetime-local" class="form-control">
+                            </div>
+
+                            <!-- Preview tĩnh -->
+                            <div class="col-12">
+                                <label class="form-label">Xem nhanh</label>
+                                <div class="border rounded overflow-hidden" style="height:220px; position:relative;">
+                                    <img src="/assets/images/slide-01.jpg" alt="preview"
+                                        style="width:100%; height:100%; object-fit:cover; filter:brightness(0.85);">
+                                    <div
+                                        class="position-absolute top-50 start-50 translate-middle text-center text-white px-3">
+                                        <h4 class="mb-1">Giảm 30% BST Thu Đông</h4>
+                                        <p class="mb-2">Chỉ trong tuần này</p>
+                                        <button type="button" class="btn btn-light btn-sm">Mua ngay</button>
+                                    </div>
+                                </div>
+                                <div class="form-text">*Preview chỉ minh hoạ (tĩnh). Sau này sẽ bind từ trường nhập.
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button class="btn btn-primary">
+                        <i class="fa fa-save me-1"></i> Lưu tạm (chưa gọi API)
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: Xác nhận xoá -->
+    <div class="modal fade" id="modalConfirmDelete" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center p-4">
+                    <i class="fa fa-exclamation-triangle text-danger fs-1 mb-2"></i>
+                    <h6 class="mb-2">Xoá banner?</h6>
+                    <p class="text-muted small mb-3">Thao tác này không thể hoàn tác.</p>
+                    <div class="d-flex gap-2 justify-content-center">
+                        <button class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Huỷ</button>
+                        <button class="btn btn-danger btn-sm" data-bs-dismiss="modal">Xoá</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

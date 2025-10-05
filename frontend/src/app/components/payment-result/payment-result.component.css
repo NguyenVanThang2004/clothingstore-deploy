@@ -1,0 +1,57 @@
+.pr-wrap {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 12px;
+}
+
+.pr-card {
+    width: 100%;
+    max-width: 560px;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+    padding: 28px 24px 32px;
+    text-align: center;
+}
+
+.pr-icon {
+    width: 72px;
+    height: 72px;
+    margin: 0 auto 12px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 40px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.pr-icon.ok {
+    background: #22c55e;
+}
+
+/* xanh */
+.pr-icon.fail {
+    background: #ef4444;
+}
+
+/* đỏ */
+
+.pr-title {
+    margin: 6px 0 4px;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.pr-sub {
+    margin: 4px 0 18px;
+    color: #616161;
+}
+
+.pr-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}

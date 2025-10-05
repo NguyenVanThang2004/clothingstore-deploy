@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Mã OTP Xác Thực</title>
+</head>
+
+<body style="font-family: Arial, sans-serif; background-color:#f4f6f9; margin:0; padding:0;">
+    <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f4f6f9; padding:30px 0;">
+        <tr>
+            <td align="center">
+                <table width="600" style="background:#ffffff; border-radius:10px; padding:30px; 
+                                          box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+
+                    <!-- Header -->
+                    <tr>
+                        <td style="text-align:center; font-size:22px; font-weight:bold; color:#2c3e50;">
+                            🔐 Mã OTP Xác Thực Email
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="border-top:2px solid #28a745; margin:20px 0;"></td>
+                    </tr>
+
+                    <!-- Greeting -->
+                    <tr>
+                        <td style="font-size:16px; color:#333; padding-top:10px;">
+                            Xin chào <span th:text="${name}">Người dùng</span>,
+                        </td>
+                    </tr>
+
+                    <!-- Message -->
+                    <tr>
+                        <td style="font-size:15px; color:#555; line-height:1.6; padding-top:15px;">
+                            Cảm ơn bạn đã đăng ký tài khoản.
+                            Đây là mã OTP để xác thực email của bạn:
+                        </td>
+                    </tr>
+
+                    <!-- OTP Box -->
+                    <tr>
+                        <td style="padding:30px 0; text-align:center;">
+                            <div style="display:inline-block; background:#28a745; color:#ffffff; 
+                                        font-size:28px; font-weight:bold; 
+                                        letter-spacing:6px; padding:18px 36px; 
+                                        border-radius:8px; box-shadow:0 4px 10px rgba(0,0,0,0.15);">
+                                <span th:text="${otp}">123456</span>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Expiry -->
+                    <tr>
+                        <td style="font-size:14px; color:#888; text-align:center;">
+                            Mã OTP này có hiệu lực trong <span th:text="${expiryMinutes}">5</span> phút.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="border-top:1px dashed #ddd; margin:25px 0;"></td>
+                    </tr>
+
+                    <!-- Footer -->
+                    <tr>
+                        <td style="font-size:14px; color:#555; line-height:1.6;">
+                            Nếu bạn không yêu cầu đăng ký, vui lòng bỏ qua email này.
+                            <br><br>
+                            Thân ái,<br><strong style="color:#2c3e50;">Đội ngũ Hỗ trợ</strong>
+                        </td>
+                    </tr>
+
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>

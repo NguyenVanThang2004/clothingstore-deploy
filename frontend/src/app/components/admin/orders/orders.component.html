@@ -1,0 +1,178 @@
+<div class="card shadow p-3">
+    <!-- Header -->
+    <div class="d-flex flex-column flex-lg-row justify-content-between align-items-start align-items-lg-center mb-3 gap-3">
+        <h4 class="mb-0">Quản lý đơn hàng</h4>
+        <div class="d-flex gap-2 w-100 w-lg-auto">
+            <select class="form-select" style="min-width: 200px;" (change)="onStatusChange($event)">
+                <option value="">-- Lọc theo trạng thái --</option>
+                <option *ngFor="let s of statusOptions" [value]="s">{{s}}</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th class="d-none d-md-table-cell">Mã</th>
+                    <th>Khách hàng</th>
+                    <th class="d-none d-lg-table-cell">Ngày đặt</th>
+                    <th class="d-none d-xl-table-cell">Thanh toán</th>
+                    <th>Trạng thái</th>
+                    <th class="text-end">Tổng tiền</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody *ngIf="!loading; else loadingTpl">
+                <tr *ngFor="let o of orders">
+                    <td class="d-none d-md-table-cell">{{o.id}}</td>
+                    <td>
+                        <div class="d-flex flex-column">
+                            <strong>{{ o.fullname || o.user.name }}</strong>
+                            <small class="text-muted d-lg-none">
+                                #{{o.id}} | {{ o.orderDate | date:'dd/MM/yyyy':'UTC' }}
+                            </small>
+                        </div>
+                    </td>
+                    <td class="d-none d-lg-table-cell">{{ o.orderDate | date:'dd/MM/yyyy HH:mm':'UTC' }}</td>
+                    <td class="d-none d-xl-table-cell">{{ o.paymentMethod }}</td>
+                    <td><span [class]="statusClass(o.status)">{{ o.status }}</span></td>
+                    <td class="text-end">{{ o.totalMoney | number:'1.0-0' }} đ</td>
+                    <td>
+                        <div class="btn-group-vertical btn-group-sm d-flex d-md-inline-flex" role="group">
+                            <button class="btn btn-primary btn-sm mb-1" (click)="openDetail(o)" title="Xem chi tiết">
+                                <i class="fa fa-eye"></i>
+                            </button>
+                            <button class="btn btn-warning btn-sm" (click)="openEdit(o)" title="Sửa">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+            <ng-template #loadingTpl>
+                <tbody>
+                    <tr>
+                        <td colspan="7" class="text-center">Đang tải...</td>
+                    </tr>
+                </tbody>
+            </ng-template>
+        </table>
+    </div>
+</div>
+
+<!-- Pagination -->
+<div class="d-flex flex-column flex-sm-row justify-content-between align-items-center mt-3 gap-2">
+    <div class="text-center text-sm-start">
+        <small class="text-muted">Tổng: {{ meta.total }} | Trang {{ meta.page }} / {{ meta.pages }}</small>
+    </div>
+    <div class="btn-group">
+        <button class="btn btn-outline-secondary" (click)="prev()" [disabled]="meta.page<=1">«</button>
+        <button class="btn btn-outline-secondary" (click)="next()" [disabled]="meta.page>=meta.pages">»</button>
+    </div>
+</div>
+
+<!-- Modal Chi tiết -->
+<div #orderDetailModal class="modal fade" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content" *ngIf="selectedOrder as o">
+            <div class="modal-header">
+                <h5 class="modal-title">Chi tiết đơn #{{ o.id }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+
+                <!-- Thông tin khách hàng -->
+                <h6 class="mb-2">👤 Khách hàng</h6>
+                <div class="row mb-3">
+                    <div class="col-md-6"><strong>Họ tên:</strong> {{ o.fullname }}</div>
+                    <div class="col-md-6"><strong>Email:</strong> {{ o.email }}</div>
+                    <div class="col-md-6"><strong>SĐT:</strong> {{ o.phoneNumber }}</div>
+                    <div class="col-md-6"><strong>Địa chỉ:</strong> {{ o.address }}</div>
+                    <div class="col-12"><strong>Ghi chú:</strong> {{ o.note || '—' }}</div>
+                </div>
+
+                <!-- Thông tin đơn hàng -->
+                <h6 class="mb-2">📦 Đơn hàng</h6>
+                <div class="row mb-3">
+                    <div class="col-md-4"><strong>Ngày đặt:</strong> {{ o.orderDate | date:'dd/MM/yyyy HH:mm' }}</div>
+                    <div class="col-md-4"><strong>Trạng thái:</strong> <span [class]="statusClass(o.status)">{{ o.status
+                            }}</span></div>
+                    <div class="col-md-4"><strong>Kích hoạt:</strong> {{ o.active ? 'Có' : 'Không' }}</div>
+                    <div class="col-md-4"><strong>Phương thức thanh toán:</strong> {{ o.paymentMethod }}</div>
+                    <div class="col-md-4"><strong>Phương thức giao hàng:</strong> {{ o.shippingMethod }}</div>
+                    <div class="col-md-4"><strong>Mã vận đơn:</strong> {{ o.trackingNumber || '—' }}</div>
+                    <div class="col-md-6"><strong>Địa chỉ giao:</strong> {{ o.shippingAddress }}</div>
+                    <div class="col-md-6"><strong>Ngày giao dự kiến:</strong> {{ o.shippingDate | date:'dd/MM/yyyy' }}
+                    </div>
+                </div>
+
+
+                <!-- Chi tiết sản phẩm -->
+                <h6 class="mb-2">🛒 Sản phẩm</h6>
+                <table class="table table-bordered table-sm align-middle">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Tên</th>
+                            <th>Danh mục</th>
+                            <th>Size</th>
+                            <th>Màu</th>
+                            <th class="text-end">Giá</th>
+                            <th class="text-end">SL</th>
+                            <th class="text-end">Thành tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let d of o.orderDetails; let i = index">
+                            <td>{{ i+1 }}</td>
+                            <td>{{ d.productName }}</td>
+                            <td>{{ d.categoryName }}</td>
+                            <td>{{ d.size }}</td>
+                            <td>{{ d.color }}</td>
+                            <td class="text-end">{{ d.price | number:'1.0-0' }} đ</td>
+                            <td class="text-end">{{ d.numberOfProducts }}</td>
+                            <td class="text-end">{{ d.totalMoney | number:'1.0-0' }} đ</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="7" class="text-end fw-bold">Tổng cộng</td>
+                            <td class="text-end fw-bold">{{ o.totalMoney | number:'1.0-0' }} đ</td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal Sửa trạng thái -->
+<div #editStatusModal class="modal fade" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" *ngIf="selectedOrder as o">
+            <div class="modal-header">
+                <h5 class="modal-title">Cập nhật trạng thái #{{o.id}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <label class="form-label">Trạng thái</label>
+                <select class="form-select" [(ngModel)]="newStatus" [disabled]="saving">
+                    <option *ngFor="let s of statusOptions" [value]="s">{{s}}</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal" [disabled]="saving">Hủy</button>
+                <button class="btn btn-primary" (click)="updateStatus()" [disabled]="saving">
+                    {{ saving ? 'Đang lưu...' : 'Lưu' }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

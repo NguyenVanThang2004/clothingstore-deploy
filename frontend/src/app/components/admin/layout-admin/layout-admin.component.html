@@ -1,0 +1,74 @@
+<div class="d-flex" id="adminLayout">
+    <!-- Overlay for mobile -->
+    <div class="sidebar-overlay d-lg-none" (click)="closeSidebar()" [class.show]="sidebarOpen"></div>
+
+    <!-- Sidebar -->
+    <nav id="sidebar" class="bg-dark text-white vh-100 p-3" [class.show]="sidebarOpen">
+        <div class="sidebar-header text-center mb-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <span>🛍️ <strong>Shop Admin</strong></span>
+                <button class="btn btn-link text-white p-0 d-lg-none" (click)="closeSidebar()">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <ul class="nav flex-column">
+            <li class="nav-item mb-2">
+                <a class="nav-link text-white" href="javascript:void(0)" (click)="closeSidebar()">
+                    <i class="fa fa-home me-2"></i> <span class="nav-text">Dashboard</span>
+                </a>
+            </li>
+
+            <li class="nav-item mb-2">
+                <a routerLink="products" class="nav-link text-white" href="#" (click)="closeSidebar()">
+                    <i class="fa fa-tshirt me-2"></i> <span class="nav-text">Quản lý Sản phẩm</span>
+                </a>
+            </li>
+            <li class="nav-item mb-2">
+                <a routerLink="orders" class="nav-link text-white" href="#" (click)="closeSidebar()">
+                    <i class="fa fa-shopping-cart me-2"></i> <span class="nav-text">Quản lý Đơn hàng</span>
+                </a>
+            </li>
+
+            <li class="nav-item mb-2">
+                <a routerLink="users" class="nav-link text-white" href="#" (click)="closeSidebar()">
+                    <i class="fa fa-users me-2"></i> <span class="nav-text">Quản lý Khách hàng</span>
+                </a>
+            </li>
+            <li class="nav-item mb-2">
+                <a routerLink="reports" class="nav-link text-white" href="#" (click)="closeSidebar()">
+                    <i class="fa fa-chart-line me-2"></i> <span class="nav-text">Báo cáo Doanh Thu</span>
+                </a>
+            </li>
+            <li class="nav-item mb-2">
+                <a routerLink="settings" class="nav-link text-white" href="#" (click)="closeSidebar()">
+                    <i class="fa fa-tools me-2"></i> <span class="nav-text">Quản Lý Hệ Thống</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Main content -->
+    <div class="flex-grow-1">
+        <!-- Topbar -->
+        <nav class="navbar navbar-light bg-light px-3">
+            <button class="btn btn-outline-secondary d-lg-none" (click)="toggleSidebar()">
+                <i class="fa fa-bars"></i>
+            </button>
+            <div class="ms-auto d-flex align-items-center flex-wrap gap-2">
+                <span class="me-3 d-none d-sm-inline">👋 Xin chào, {{ userName }}</span>
+                <span class="me-3 d-sm-none">👋 {{ userName }}</span>
+                <button class="btn btn-danger btn-sm" (click)="logout()">
+                    <i class="fa fa-sign-out-alt me-1 d-none d-sm-inline"></i>
+                    <span class="d-none d-sm-inline">Đăng xuất</span>
+                    <i class="fa fa-sign-out-alt d-sm-none"></i>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Content -->
+        <div class="p-3">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

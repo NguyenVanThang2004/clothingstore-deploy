@@ -1,0 +1,130 @@
+# ===============================
+# 🌐 GLOBAL SETTINGS
+# ===============================
+# Ignore all environment files (anywhere)
+**/.env
+**/.env.*
+!.env.example
+
+# Ignore OS/system files
+.DS_Store
+Thumbs.db
+
+# Ignore logs
+*.log
+logs/
+**/logs/
+*.pid
+*.seed
+*.pid.lock
+
+# Ignore temporary or backup files
+*.tmp
+*.swp
+*.bak
+*.old
+*.orig
+*~
+
+# Ignore IDE/editor settings
+.vscode/
+.idea/
+*.iml
+*.classpath
+*.project
+*.settings/
+
+# Ignore build artifacts
+dist/
+build/
+out/
+target/
+bin/
+.gradle/
+.mvn/
+!**/src/main/**
+!**/src/test/**
+
+# ===============================
+# 🅰️ ANGULAR FRONTEND
+# ===============================
+# Node modules
+frontend/node_modules/
+node_modules/
+
+# Build output
+frontend/dist/
+dist/
+
+# Angular environment & config
+frontend/src/environments/environment*.ts
+# (Keep environment.example.ts for reference)
+!frontend/src/environments/environment.example.ts
+
+# npm & cache
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# ===============================
+# ☕ SPRING BOOT BACKEND
+# ===============================
+# Maven/Gradle build directories
+backend/target/
+backend/.gradle/
+backend/build/
+backend/out/
+
+# Java IDE artifacts
+backend/.classpath
+backend/.project
+backend/.settings/
+backend/*.iml
+
+# Spring Boot specific
+backend/.mvn/
+backend/mvnw
+backend/mvnw.cmd
+
+# Logs & tmp
+backend/logs/
+backend/tmp/
+
+# ===============================
+# 🐳 DOCKER / DEPLOYMENT
+# ===============================
+docker-compose.override.yml
+docker-compose.dev.yml
+**/docker-compose.local.yml
+**/docker-compose.test.yml
+
+# Ignore Docker build cache
+**/.docker/
+**/.dockerignore
+
+# Nginx temp & cache
+nginx/cache/
+nginx/logs/
+
+# ===============================
+# 🗄️ DATABASE
+# ===============================
+# Ignore MySQL data and dumps
+mysql_data/
+*.sql
+*.db
+*.sqlite
+dump.sql
+backup.sql
+
+# ===============================
+# 🧰 MISC
+# ===============================
+# Ignore any uploads or runtime storage
+uploads/
+storage/
+tmp/
+cache/
+runtime/

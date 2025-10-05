@@ -1,0 +1,83 @@
+<div class="container py-5">
+    <h2 class="mb-4">Đơn hàng của tôi</h2>
+
+    <div *ngIf="orders.length === 0" class="alert alert-info">
+        Bạn chưa có đơn hàng nào.
+    </div>
+
+    <div *ngFor="let order of orders" class="card shadow-sm rounded-3 mb-4">
+        <div class="card-header d-flex justify-content-between">
+            <span>Đơn hàng #{{ order.id }}</span>
+            <span class="badge bg-success">{{ order.status }}</span>
+        </div>
+        <div class="card-body">
+            <p><strong>Ngày đặt:</strong> {{ order.orderDate | date:'dd/MM/yyyy HH:mm':'UTC' }}</p>
+
+
+            <p><strong>Tổng tiền:</strong> {{ order.totalMoney | number:'1.0-0' }} đ</p>
+            <p><strong>Phương thức thanh toán:</strong> {{ order.paymentMethod }}</p>
+            <p><strong>Phương thức vận chuyển:</strong> {{ order.shippingMethod }}</p>
+            <p><strong>Mã vận đơn:</strong>
+                <span *ngIf="order.trackingNumber; else noTracking">
+                    {{ order.trackingNumber }}
+                </span>
+                <ng-template #noTracking>Chưa có</ng-template>
+            </p>
+
+            <table class="table table-sm table-bordered mt-3">
+                <thead class="table-light">
+                    <tr>
+                        <th>#</th>
+                        <th>Sản phẩm</th>
+                        <th>Size</th>
+                        <th>Màu</th>
+                        <th>Số lượng</th>
+                        <th>Giá</th>
+                        <th>Tổng</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of order.orderDetails; let i = index">
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ item.productName }}</td>
+                        <td>{{ item.size }}</td>
+                        <td>{{ item.color }}</td>
+                        <td>{{ item.numberOfProducts }}</td>
+                        <td>{{ item.price | number:'1.0-0' }} đ</td>
+                        <td>{{ item.totalMoney | number:'1.0-0' }} đ</td>
+                        <td>
+                            <button *ngIf="order.status === 'DELIVERED'" class="btn btn-primary btn-sm"
+                                (click)="reviewProduct(item)">
+                                Đánh giá
+                            </button>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+            <div class="text-end mt-3">
+                <button *ngIf="order.status === 'PENDING' || order.status === 'PROCESSING'" class="btn btn-danger"
+                    (click)="cancelOrder(order)">
+                    Hủy đơn hàng
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- phân trang -->
+    <nav *ngIf="meta">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" [class.disabled]="page === 1">
+                <a class="page-link" (click)="changePage(page - 1)">Trước</a>
+            </li>
+            <li class="page-item" *ngFor="let p of [].constructor(meta.pages); let i = index"
+                [class.active]="page === i + 1">
+                <a class="page-link" (click)="changePage(i + 1)">{{ i + 1 }}</a>
+            </li>
+            <li class="page-item" [class.disabled]="page === meta.pages">
+                <a class="page-link" (click)="changePage(page + 1)">Sau</a>
+            </li>
+        </ul>
+    </nav>
+</div>

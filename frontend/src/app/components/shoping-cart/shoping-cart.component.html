@@ -1,0 +1,108 @@
+<!-- breadcrumb -->
+<div class="container">
+    <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+        <a routerLink="/" class="stext-109 cl8 hov-cl1 trans-04">
+            Home
+            <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+        </a>
+
+        <span class="stext-109 cl4">
+            Shopping Cart
+        </span>
+    </div>
+</div>
+
+<!-- Shoping Cart -->
+<div class="container p-t-75 p-b-85">
+    <div class="row">
+        <div class="col-lg-8 col-xl-8 m-lr-auto m-b-50">
+            <div class="wrap-table-shopping-cart">
+                <table class="table-shopping-cart">
+                    <tr class="table_head">
+                        <th style="width:40px;">
+                            <input type="checkbox" [(ngModel)]="selectAll" (change)="toggleSelectAll()">
+                        </th>
+                        <th>SẢN PHẨM</th>
+                        <th>CHI TIẾT</th>
+                        <th>GIÁ</th>
+                        <th>SỐ LƯỢNG</th>
+                        <th>TỔNG CỘNG</th>
+                        <th></th>
+                    </tr>
+
+                    <tr class="table_row" *ngFor="let item of items">
+                        <!-- Checkbox -->
+                        <td>
+                            <input type="checkbox" [(ngModel)]="item.selected" (change)="updateTotal()">
+                        </td>
+
+                        <!-- Product image -->
+                        <td>
+                            <div class="how-itemcart1">
+                                <img [src]="item.image || '/assets/images/no-image.png'" alt="IMG">
+                            </div>
+                        </td>
+
+                        <!-- Name + Size + Color -->
+                        <td class="text-left">
+                            <strong>{{ item.name }}</strong><br>
+                            <small>Size: {{ item.size }}</small><br>
+                            <small>Color: {{ item.color }}</small>
+                        </td>
+
+                        <!-- Price -->
+                        <td>{{ item.price | number:'1.0-0' }} đ</td>
+
+                        <!-- Quantity -->
+                        <td>
+                            <div class="wrap-num-product flex-w m-l-auto m-r-0">
+                                <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m"
+                                    (click)="decreaseQty(item)">
+                                    <i class="fs-16 zmdi zmdi-minus"></i>
+                                </div>
+                                <input class="mtext-104 cl3 txt-center num-product" type="number" min="1"
+                                    [max]="item.stockQuantity" [(ngModel)]="item.quantity"
+                                    (change)="onManualQtyChange(item)" />
+
+                                <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m"
+                                    (click)="increaseQty(item)">
+                                    <i class="fs-16 zmdi zmdi-plus"></i>
+                                </div>
+                            </div>
+                        </td>
+
+                        <!-- Total -->
+                        <td>{{ (item.price * item.quantity) | number:'1.0-0' }} đ</td>
+
+                        <!-- Remove -->
+                        <td>
+                            <button class="btn btn-sm btn-danger" (click)="removeItem(item)">X</button>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-xl-4 m-lr-auto m-b-50">
+            <div class="bor10 p-lr-40 p-t-30 p-b-40">
+                <h4 class="mtext-109 cl2 p-b-30">Tổng giỏ hàng</h4>
+
+                <div class="flex-w flex-t p-b-13">
+                    <div class="size-208">
+                        <span class="stext-110 cl2">Tổng cộng:</span>
+                    </div>
+                    <div class="size-209">
+                        <span class="mtext-110 cl2">{{ total | number:'1.0-0' }} đ</span>
+                    </div>
+                </div>
+
+                <button (click)="proceedToCheckout()"
+                    class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
+                    Tiến hành thanh toán
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>

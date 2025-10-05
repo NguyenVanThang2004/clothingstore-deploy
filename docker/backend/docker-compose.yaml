@@ -1,0 +1,49 @@
+version: "3.8"
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: clothing_mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: clothingstore
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - clothing_net
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p123456" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    # Cách 1: build từ source (khuyên dùng khi bạn chưa có image sẵn)
+    build:
+      context: ../../backend # sửa cho đúng đến thư mục chứa Dockerfile của backend
+      dockerfile: Dockerfile
+    image: backend_clothing:latest # đặt tên image sau khi build
+    container_name: clothing_backend
+    env_file:
+      - ../../backend/.env
+    ports:
+      - "8080:8080"
+    volumes:
+      # map thư mục upload nếu app dùng /uploads trong container
+      - ../../backend/uploads:/uploads
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - clothing_net
+
+volumes:
+  mysql_data:
+
+
+networks:
+  clothing_net:
+    driver: bridge

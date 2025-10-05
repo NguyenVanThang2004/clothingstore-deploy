@@ -1,0 +1,105 @@
+<app-header></app-header>
+
+<!-- breadcrumb -->
+<div class="container">
+    <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+        <a href="index.html" class="stext-109 cl8 hov-cl1 trans-04">
+            Home
+            <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+        </a>
+
+        <span class="stext-109 cl4">
+            Checkout
+        </span>
+    </div>
+</div>
+
+
+
+
+
+<form class="bg0 p-t-75 p-b-85" (ngSubmit)="placeOrder()">
+    <div class="container">
+        <div class="row">
+            <!-- Billing Details -->
+            <div class="col-lg-7 col-xl-7 m-b-50">
+                <div class="bor10 p-lr-40 p-t-30 p-b-40 p-lr-15-sm">
+                    <h4 class="mtext-109 cl2 p-b-30">THÔNG TIN GIAO HÀNG</h4>
+
+                    <div class="row">
+                        <div class="col-sm-6 p-b-20">
+                            <label>Họ Tên *</label>
+                            <input [(ngModel)]="orderForm.fullName" name="fullName"
+                                class="size-111 bor8 stext-102 cl2 p-lr-20" required />
+                        </div>
+                        <div class="col-sm-6 p-b-20">
+                            <label>Số điện thoại *</label>
+                            <input [(ngModel)]="orderForm.phone" name="phone"
+                                class="size-111 bor8 stext-102 cl2 p-lr-20" required />
+                        </div>
+                        <div class="col-sm-12 p-b-20">
+                            <label>Email *</label>
+                            <input [(ngModel)]="orderForm.email" name="email" type="email"
+                                class="size-111 bor8 stext-102 cl2 p-lr-20" required readonly />
+                        </div>
+                        <div class="col-sm-12 p-b-20">
+                            <label>Địac chỉ *</label>
+                            <input [(ngModel)]="orderForm.address" name="address"
+                                class="size-111 bor8 stext-102 cl2 p-lr-20" required />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Summary -->
+            <div class="col-lg-5 col-xl-5 m-b-50">
+                <div class="bor10 p-lr-40 p-t-30 p-b-40 p-lr-15-sm">
+                    <h4 class="mtext-109 cl2 p-b-30">ĐƠN HÀNG CỦA BẠN</h4>
+
+                    <ul class="header-cart-wrapitem w-full p-b-20">
+                        <li *ngFor="let i of checkoutItems" class="header-cart-item flex-w flex-t m-b-12">
+                            <div class="header-cart-item-img">
+                                <img [src]="i.image || '/assets/images/default.png'" [alt]="i.name" />
+                            </div>
+                            <div class="header-cart-item-txt p-t-8">
+                                <span class="header-cart-item-name m-b-18">{{ i.name }} ({{ i.size }} - {{ i.color
+                                    }})</span>
+                                <span class="header-cart-item-info">{{ i.quantity }} x {{ i.price | number:'1.0-0' }}
+                                    đ</span>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <div class="flex-w flex-t bor12 p-tb-13">
+                        <div class="size-208"><span>Tạm tính:</span></div>
+                        <div class="size-209"><span>{{ subtotal | number:'1.0-0' }} đ</span></div>
+                    </div>
+
+                    <div class="flex-w flex-t p-t-27 p-b-33">
+                        <div class="size-208"><span>Tổng cộng:</span></div>
+                        <div class="size-209 p-t-1"><span>{{ total | number:'1.0-0' }} đ</span></div>
+                    </div>
+
+                    <!-- Payment -->
+                    <div class="p-t-15">
+                        <label class="stext-111 cl2 p-b-10">Phương thức thanh toán *</label>
+                        <div class="p-b-10">
+                            <input type="radio" [(ngModel)]="orderForm.payment" name="payment" value="COD" checked />
+                            Thanh toán khi nhận hàng
+                        </div>
+                        <div class="p-b-10">
+                            <input type="radio" [(ngModel)]="orderForm.payment" name="payment" value="VNPAY" /> VN pay
+                        </div>
+                    </div>
+
+                    <button type="submit" class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 m-t-20">Đặt
+                        hàng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
+<app-footer></app-footer>
